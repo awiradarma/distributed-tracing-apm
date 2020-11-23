@@ -1,0 +1,27 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.0'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'test.andre'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// implementation 'io.opentracing.contrib:opentracing-spring-jaeger-web-starter:3.2.0'
+	// implementation("com.newrelic.telemetry:opentelemetry-exporters-newrelic:0.10.0")
+	// implementation("io.opentelemetry:opentelemetry-sdk:0.10.0")
+	// implementation("com.newrelic.telemetry:telemetry-core:0.9.0")
+	// implementation("com.newrelic.telemetry:telemetry-http-okhttp:0.9.0")
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
