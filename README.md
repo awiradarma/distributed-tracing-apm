@@ -79,3 +79,21 @@ java -javaagent:/home/andre/newrelic/inventory/newrelic.jar -jar build/libs/inve
 
 - Hit the service URI and then check the New Relic One UI
 ![newrelic_javaagent.png](newrelic_javaagent.png)
+
+## Leveraging Open Telemetry Collector to export to multiple destinations
+
+- Download the latest release of Open Telemetry Collector Contrib from https://github.com/open-telemetry/opentelemetry-collector-contrib/releases 
+- Provide a configuration file and start it locally
+```
+~/workspace/opentelemetry-0.10.0$ ./otelcontribcol_linux_amd64  --config otel.yml 
+```
+- Change the opentracing jaeger setting for both inventory and backend service (in their respective application.properties)
+```
+opentracing.jaeger.udp-sender.host=localhost
+opentracing.jaeger.udp-sender.port=6932
+```
+- Rebuild and start both services, hit the inventory endpoint (http://localhost:8080/backend) to generate the traces
+- Validate that the trace shows up on Jaeger UI
+![otel_collector_jaeger.png](otel_collector_jaeger.png)
+- Validate that the trace shows up on New Relic One Distributed Tracing
+![otel_collector_newrelic.png](otel_collector_newrelic.png)

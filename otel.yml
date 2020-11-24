@@ -1,0 +1,36 @@
+receivers:
+  # Data sources: traces
+  jaeger:
+    protocols:
+      thrift_compact:
+        endpoint: 0.0.0.0:6932
+
+processors:
+  attributes:
+    actions:
+      - key: via-otel-collector
+        value: true
+        action: insert
+
+exporters:
+  file:
+    path: ./filename.json
+
+  jaeger:
+    endpoint: localhost:14250
+    insecure: true
+
+  logging:
+    loglevel: debug
+
+  newrelic:
+      apikey: <INSERT KEY HERE>
+      common_attributes:
+        datacenter: bogus-region-01
+
+service:
+  pipelines:
+    traces:
+      receivers: [jaeger]
+      processors: [attributes]
+      exporters: [file, jaeger, logging, newrelic]
